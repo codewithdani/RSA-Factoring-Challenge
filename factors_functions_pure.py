@@ -6,6 +6,14 @@ from time import time as timestamp
 
 
 def unix_time(function):
+    '''Return `real`, `sys` and `user` elapsed time, like UNIX's command `time`
+    You can calculate the amount of used CPU-time used by your
+    function/callable by summing `user` and `sys`. `real` is just like the wall
+    clock.
+    Note that `sys` and `user`'s resolutions are limited by the resolution of
+    the operating system's software clock (check `man 7 time` for more
+    details).
+    '''
     start_time, start_resources = timestamp(), resource_usage(RUSAGE_SELF)
     function()
     end_resources, end_time = resource_usage(RUSAGE_SELF), timestamp()
@@ -17,6 +25,12 @@ def unix_time(function):
 
 
 def trial_division(n: int) -> int:
+    """
+    Finds the smallest divisor, if any, of a given number `n`
+    Returns:
+        smallest divisor if found
+        0 if n is prime
+    """
     # TODO: Create a C library with this function to speed it up
     while n % 2 == 0:
         return 2
